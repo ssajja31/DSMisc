@@ -6,30 +6,40 @@ using namespace std;
 int MaxMountainLength(vector<int> &v)
 {
     int result = 0;
+    int n = v.size() - 1;
 
-    for(int i = 0; i < v.size() - 1; i++)
+    for(int i = 0; i < n; i++)
     {
         int temp = 0;
-        while (v[i] < v[i+1])
+        bool incFlag = false;
+        bool decFlag = false;
+
+        while (i < n && v[i] < v[i+1])
         {
             temp++;
             i++;
+            incFlag = true;
         }
 
-        while (v[i] > v[i+1])
+        while (i < n && v[i] > v[i+1])
         {
             temp++;
             i++;
+            decFlag = true;
         }
 
-        if (temp > result)
+        if (temp > result && incFlag && decFlag)
         {
             result = temp;
+        }
+
+        if (incFlag || decFlag)
+        {
             i--;
         }
     }
 
-    return result + 1;
+    return result == 0 ? result : result + 1;
 }
 
 int main()
